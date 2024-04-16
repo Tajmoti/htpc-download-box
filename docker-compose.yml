@@ -68,17 +68,13 @@ services:
       - ${ROOT}/config/plex/transcode:/transcode # temp transcoded files
       - ${ROOT}/complete:/data # media library
 
-  bazarr:
-    container_name: bazarr
-    image: linuxserver/bazarr
+  storm:
+    container_name: storm
+    image: ghcr.io/relvacode/storm:latest
     restart: unless-stopped
     network_mode: host
     environment:
-      - PUID=${PUID} # default user id, defined in .env
-      - PGID=${PGID} # default group id, defined in .env
-      - TZ=${TZ} # timezone, defined in .env
-      - UMASK_SET=022 #optional
-    volumes:
-      - ${ROOT}/config/bazarr:/config # config files
-      - ${ROOT}/complete/movies:/movies # movies folder
-      - ${ROOT}/complete/tv:/tv # tv shows folder
+      - DELUGE_RPC_HOSTNAME=deluge
+      - DELUGE_RPC_USERNAME=storm
+      - DELUGE_RPC_PASSWORD=storm
+      - DELUGE_RPC_VERSION=v2
